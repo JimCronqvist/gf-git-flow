@@ -128,9 +128,8 @@ if [ "$SUBCMD" == "init" ]; then
     git config gitflow.feature.start.fetch true
     SCRIPT_PATH=${0}
     echo ""
-    echo "Please run the below command manually in order to setup the 'gf' command:"
-    echo ""
-    echo alias gf="'"$SCRIPT_PATH"'"
+    alias gf="'"$SCRIPT_PATH"'"
+    echo alias gf="'"$SCRIPT_PATH"'" >> ~/.bash_profile
 elif [ "$SUBCMD" == "feature" -a "$ACTION" == "list" ]; then
     # Enforce verbose when listing features, just because it is nice.
     git flow "$@" -v
