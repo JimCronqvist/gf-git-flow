@@ -164,8 +164,8 @@ elif [ "$SUBCMD" == "feature" -a "$ACTION" == "rebase" ]; then
     fi
 	
     # Enforce merge if there is a risk for a conflict
-    CONFLICTS=$(git merge-tree `git merge-base $NAME $DEVELOP_BRANCH` $DEVELOP_BRANCH $NAME | grep '>>>>>>' -q)
-    if $CONFLICTS ; then
+    CONFLICTS=$(git merge-tree `git merge-base $NAME $DEVELOP_BRANCH` $DEVELOP_BRANCH $NAME | grep '>>>>>>' -q && echo 1 || echo 0)
+    if [ "$CONFLICTS" == "1" ]; then
         TYPE="merge"
     fi
 	
@@ -177,7 +177,7 @@ elif [ "$SUBCMD" == "feature" -a "$ACTION" == "rebase" ]; then
 
     if [ "$TYPE" == "merge" ]; then
         echo ""
-        if $CONFLICTS ; then
+        if [ "$CONFLICTS" == "1" ]; then
             echo "There will be a conflict when merging in the latest commmits from develop"
             echo "If you prefer to perform the merge within your IDE instead, you should abort"
             read -p "To continue press Enter, to abort press CTRL+C: "
